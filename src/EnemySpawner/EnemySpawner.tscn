@@ -1,0 +1,166 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/EnemySpawner/EnemySpawner.gd" type="Script" id=1]
+[ext_resource path="res://src/Enemy/Variations/DebugEnemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Images/LowPoly.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Models/Towers/Spawner.obj" type="ArrayMesh" id=4]
+[ext_resource path="res://Assets/Images/LandMarker.png" type="Texture" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+params_cull_mode = 2
+albedo_color = Color( 0.760784, 0.321569, 0.796078, 1 )
+albedo_texture = ExtResource( 5 )
+emission_enabled = true
+emission = Color( 0.807843, 0.403922, 0.921569, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+emission_texture = ExtResource( 5 )
+
+[sub_resource type="QuadMesh" id=6]
+material = SubResource( 5 )
+size = Vector2( 0.3, 0.3 )
+
+[sub_resource type="Curve" id=7]
+max_value = 2.0
+_data = [ Vector2( 0, 1.54545 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.427273 ), -1.75454, 0.0, 0, 0 ]
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+albedo_texture = ExtResource( 5 )
+emission_enabled = true
+emission = Color( 1, 1, 1, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+emission_texture = ExtResource( 5 )
+
+[sub_resource type="PlaneMesh" id=4]
+material = SubResource( 3 )
+size = Vector2( 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.580392, 0.580392, 0.580392, 1 )
+
+[sub_resource type="CubeMesh" id=9]
+material = SubResource( 8 )
+size = Vector3( 0.2, 0.2, 0.2 )
+
+[sub_resource type="Curve" id=10]
+max_value = 2.0
+_data = [ Vector2( 0, 0.5 ), 0.0, 0.0, 0, 0, Vector2( 0.295337, 1.03636 ), 0.0, 0.0, 0, 0, Vector2( 0.715026, 1.01818 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.2 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Spawn"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphics:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 10, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Graphics/StartingPoint/MeshInstance/Jet:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LandingStrip/Smoke:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3.2, 4.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("LandingStrip/Smoke")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 4.9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
+[node name="EnemySpawner" type="Spatial"]
+script = ExtResource( 1 )
+enemy_resources = [ ExtResource( 2 ) ]
+
+[node name="Graphics" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+
+[node name="StartingPoint" type="Position3D" parent="Graphics"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Graphics/StartingPoint"]
+transform = Transform( -2, 0, -6.51683e-07, 0, 2, 0, 6.51683e-07, 0, -2, 0, -0.00113201, -0.402418 )
+mesh = ExtResource( 4 )
+material/0 = SubResource( 1 )
+
+[node name="Jet" type="CPUParticles" parent="Graphics/StartingPoint/MeshInstance"]
+transform = Transform( 1, 3.25841e-07, 3.25841e-07, -3.25841e-07, -4.37114e-08, 1, 3.25841e-07, -1, -4.37113e-08, 0, 0.0192447, 0 )
+amount = 16
+lifetime = 2.5
+mesh = SubResource( 6 )
+direction = Vector3( 0, 0, -1 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.2
+scale_amount_curve = SubResource( 7 )
+color = Color( 0.835294, 0.282353, 0.898039, 1 )
+
+[node name="OmniLight" type="OmniLight" parent="Graphics/StartingPoint"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0509927, 0.362018 )
+light_color = Color( 0.517647, 0.25098, 0.737255, 1 )
+
+[node name="SpawnPoint" type="Position3D" parent="Graphics"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.7 )
+
+[node name="LandingStrip" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, -5 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Smoke" type="CPUParticles" parent="LandingStrip"]
+emitting = false
+amount = 16
+mesh = SubResource( 9 )
+emission_shape = 2
+emission_box_extents = Vector3( 0.2, 0.1, 0.2 )
+direction = Vector3( 0, 1, 0 )
+spread = 66.96
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1.0
+scale_amount_curve = SubResource( 10 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Spawn = SubResource( 2 )

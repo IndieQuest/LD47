@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Levels/Level.gd" type="Script" id=1]
+[ext_resource path="res://src/DebugShapes/Ground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Models/SimpleBase.glb" type="PackedScene" id=3]
+
+[sub_resource type="Curve3D" id=1]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -9.09164, 0, 0.0538609, 0, 0, 0, 0, 0, 0, -8.40223, 0, -3.30703, 0, 0, 0, 0, 0, 0, -5.90311, 0, -6.81873, 0, 0, 0, 0, 0, 0, -1.37883, 0, -8.97315, 0, 0, 0, 0, 0, 0, 2.52067, 0, -8.73617, 0, 0, 0, 0, 0, 0, 6.16163, 0, -6.81873, 0, 0, 0, 0, 0, 0, 8.1437, 0, -3.56556, 0, 0, 0, 0, 0, 0, 8.76848, 0, 0.20467, 0, 0, 0, 0, 0, 0, 8.3376, 0, 3.71637, 0, 0, 0, 0, 0, 0, 6.50634, 0, 6.28013, 0, 0, 0, 0, 0, 0, 3.72714, 0, 8.0683, 0, 0, 0, 0, 0, 0, -0.517061, 0, 8.8008, 0, 0, 0, 0, 0, 0, -5.70921, 0, 7.24962, 0, 0, 0, 0, 0, 0, -8.46686, 0, 3.2424, 0, 0, 0, 0, 0, 0, -9.09164, 0, 0.0538609 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="Level" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Graphics" type="Spatial" parent="."]
+
+[node name="Ground" parent="Graphics" instance=ExtResource( 2 )]
+
+[node name="SimpleBase" parent="Graphics" instance=ExtResource( 3 )]
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )

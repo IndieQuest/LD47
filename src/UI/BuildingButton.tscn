@@ -1,0 +1,66 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/UI/Fonts/Bungee/Bungee16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/UI/BuildingButton.gd" type="Script" id=4]
+
+[node name="BuildingButton" type="Button"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 100, 40 )
+flat = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+active_color = Color( 0.0694275, 0.321948, 0.355469, 1 )
+disabled_color = Color( 0.352941, 0.352941, 0.352941, 1 )
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.388235, 0.388235, 0.388235, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Gun"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Price" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -62.0
+margin_top = 5.0
+margin_right = 62.0
+margin_bottom = 22.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Price" type="Label" parent="Price"]
+margin_left = 18.0
+margin_right = 77.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 1 )
+text = "price:"
+
+[node name="Value" type="Label" parent="Price"]
+margin_left = 81.0
+margin_right = 105.0
+margin_bottom = 17.0
+custom_fonts/font = ExtResource( 1 )
+text = "00"
+[connection signal="pressed" from="." to="." method="_on_BuildingButton_pressed"]

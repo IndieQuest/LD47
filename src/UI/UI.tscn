@@ -1,0 +1,222 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/UI/UI.gd" type="Script" id=1]
+[ext_resource path="res://src/UI/BuildingButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/UI/HP.gd" type="Script" id=3]
+[ext_resource path="res://Assets/UI/Fonts/Bungee/Bungee25.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/UI/Money.gd" type="Script" id=5]
+[ext_resource path="res://src/UI/WaveInfo.gd" type="Script" id=6]
+[ext_resource path="res://src/Buildings/Moveable/Tower1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/UI/Fonts/Bungee/Bungee32.tres" type="DynamicFont" id=9]
+[ext_resource path="res://src/UI/Timer.gd" type="Script" id=10]
+[ext_resource path="res://src/UI/NextWaveButton.gd" type="Script" id=11]
+
+[node name="UI" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugButton" type="Button" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_right = 92.0
+text = "DEBUG"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuildingButtons" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -120.0
+margin_top = -164.0
+margin_right = -20.0
+margin_bottom = 28.0
+custom_constants/separation = 44
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuildingButton3" parent="BuildingButtons" instance=ExtResource( 2 )]
+margin_right = 100.0
+building_res = ExtResource( 8 )
+price = 7
+active_color = Color( 0.247059, 0.286275, 0.294118, 1 )
+disabled_color = Color( 0.32549, 0.32549, 0.32549, 0.564706 )
+price_active_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+price_disabled_color = Color( 1, 1, 1, 1 )
+
+[node name="TowerToolTip" type="ColorRect" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -250.0
+margin_top = -120.0
+rect_min_size = Vector2( 250, 120 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyToolTip" type="ColorRect" parent="."]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -121.0
+margin_right = 250.0
+margin_bottom = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WaveInfo" type="ColorRect" parent="."]
+margin_left = 12.0
+margin_top = 162.0
+margin_right = 177.0
+margin_bottom = 406.0
+color = Color( 0.482353, 0.482353, 0.482353, 0 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Layout" type="VBoxContainer" parent="WaveInfo"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HP" type="HBoxContainer" parent="."]
+margin_left = 10.0
+margin_top = 20.0
+margin_right = 261.0
+margin_bottom = 46.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="HP"]
+margin_right = 121.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 4 )
+text = "HEALTH: "
+valign = 1
+
+[node name="value" type="Label" parent="HP"]
+margin_left = 125.0
+margin_right = 251.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 4 )
+text = "xxxxxxx"
+align = 2
+valign = 1
+
+[node name="Money" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -172.0
+margin_top = 20.0
+margin_right = -10.0
+margin_bottom = 46.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Money"]
+margin_right = 122.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 4 )
+text = "energy: "
+valign = 1
+
+[node name="value" type="Label" parent="Money"]
+margin_left = 126.0
+margin_right = 162.0
+margin_bottom = 26.0
+custom_fonts/font = ExtResource( 4 )
+text = "xx"
+align = 2
+valign = 1
+
+[node name="NextWave" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="VBoxContainer" parent="NextWave"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -99.0
+margin_top = -6.0
+margin_right = 99.0
+margin_bottom = 93.0
+alignment = 1
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="NextWave/Timer"]
+margin_top = 18.0
+margin_right = 198.0
+margin_bottom = 51.0
+custom_fonts/font = ExtResource( 9 )
+text = "next wave "
+align = 1
+valign = 1
+
+[node name="Value" type="Label" parent="NextWave/Timer"]
+margin_top = 55.0
+margin_right = 198.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 4 )
+text = "xx"
+align = 1
+valign = 1
+
+[node name="Timer" type="Timer" parent="NextWave/Timer"]
+
+[node name="NextWaveButton" type="Button" parent="NextWave"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -99.0
+margin_top = -49.0
+margin_right = 99.0
+margin_bottom = -17.0
+custom_fonts/font = ExtResource( 4 )
+flat = true
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="NextWave/NextWaveButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color_shadow = Color( 0.192157, 0.192157, 0.192157, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 3
+text = "next level"
+align = 1
+valign = 1
+[connection signal="pressed" from="DebugButton" to="." method="_on_DebugButton_pressed"]
+[connection signal="pressed" from="NextWave/NextWaveButton" to="NextWave/NextWaveButton" method="_on_NextWaveButton_pressed"]

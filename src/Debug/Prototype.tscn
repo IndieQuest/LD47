@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/ControllerRTS/RtsCameraController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Levels/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Buildings/Moveable/SimpleMainBase.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/Debug/Prototype.gd" type="Script" id=4]
+[ext_resource path="res://src/UI/UI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Music/Ambient.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Enviorments/WorldEnvironment.tscn" type="PackedScene" id=7]
+
+[node name="Prototype" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 7 )]
+
+[node name="Lights" type="Spatial" parent="."]
+
+[node name="OmniLight" type="OmniLight" parent="Lights"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.24905, 0 )
+light_energy = 1.2
+omni_range = 47.4391
+
+[node name="RtsCameraController" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.124952, 0, -0.992163, 0, 1, 0, 0.992163, 0, -0.124952, 0, 0, 0 )
+min_zoom = 5.0
+max_zoom = 7.5
+min_elevation_angle = 20
+max_elevation_angle = 60
+allow_wasd_movement = false
+zoom_to_curser = false
+allow_pan = false
+
+[node name="Elevation" parent="RtsCameraController" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.741508, 0.670945, 0, -0.670945, 0.741508, 0, 0, 0 )
+
+[node name="Camera" parent="RtsCameraController/Elevation" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.976462, 0.21569, 0, -0.21569, 0.976462, 0, 0.160029, 5.21957 )
+size = 3.0
+
+[node name="Level" parent="." instance=ExtResource( 2 )]
+
+[node name="MainBase" parent="." instance=ExtResource( 3 )]
+
+[node name="Edge" parent="MainBase" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.64572 )
+
+[node name="UI" parent="." instance=ExtResource( 5 )]
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5334 )
+
+[node name="Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -8.0
+autoplay = true
+[connection signal="input_event" from="MainBase/Edge/Sensor" to="MainBase" method="_on_Sensor_input_event"]
+
+[editable path="RtsCameraController"]
+
+[editable path="MainBase"]

@@ -8,15 +8,128 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "RigidBody",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://src/MachineGun/Bullet.gd"
+}, {
+"base": "Spatial",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://src/Enemy/Enemy.gd"
+}, {
+"base": "Spatial",
+"class": "EnemySpawner",
+"language": "GDScript",
+"path": "res://src/EnemySpawner/EnemySpawner.gd"
+}, {
+"base": "Spatial",
+"class": "Gun",
+"language": "GDScript",
+"path": "res://src/MachineGun/Gun.gd"
+}, {
+"base": "Spatial",
+"class": "MainBase",
+"language": "GDScript",
+"path": "res://src/Buildings/Moveable/MainBase.gd"
+}, {
+"base": "Spatial",
+"class": "MoveableBuilding",
+"language": "GDScript",
+"path": "res://src/Buildings/MoveableBuilding.gd"
+}, {
+"base": "Spatial",
+"class": "Turret",
+"language": "GDScript",
+"path": "res://src/Turrets/Turret.gd"
+}, {
+"base": "Resource",
+"class": "WavePartTemplate",
+"language": "GDScript",
+"path": "res://src/Wave/WavePart.gd"
+}, {
+"base": "Resource",
+"class": "WaveTemplate",
+"language": "GDScript",
+"path": "res://src/Wave/Wave.gd"
+} ]
 _global_script_class_icons={
-
+"Bullet": "",
+"Enemy": "",
+"EnemySpawner": "",
+"Gun": "",
+"MainBase": "",
+"MoveableBuilding": "",
+"Turret": "",
+"WavePartTemplate": "",
+"WaveTemplate": ""
 }
 
 [application]
 
 config/name="LD47"
+run/main_scene="res://src/MainMenu.tscn"
 config/icon="res://Assets/Images/icon.png"
+
+[autoload]
+
+GM="*res://src/Singelton/GameManager.gd"
+Events="*res://src/Singelton/EventBus.gd"
+MouseHelper="*res://src/MouseHelper3D/MouseHelper.gd"
+Globals="*res://src/Singelton/Globals.gd"
+SoundManager="*res://src/Singelton/SoundManager.tscn"
+
+[input]
+
+camera_rotate={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":3,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+camera_zoom_in={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+camera_zoom_out={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+camera_pan={
+"deadzone": 0.5,
+"events": [  ]
+}
+LMB={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+building_move_clockwise={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+building_move_counter_clockwise={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+RMB={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+3d_physics/layer_1="ClickSensor"
+3d_physics/layer_2="AreaBlocker"
+3d_physics/layer_3="MovementBlocker"
+3d_physics/layer_4="EnemySensor"
+3d_physics/layer_5="Enemies"
+3d_physics/layer_6="MainBase"
 
 [rendering]
 

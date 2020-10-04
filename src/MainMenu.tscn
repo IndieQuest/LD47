@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Enviorments/WorldEnvironment.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Levels/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Buildings/Moveable/SimpleMainBase.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/UI/Fonts/Bungee/Bungee32.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Assets/UI/Fonts/Bungee/Bungee45.tres" type="DynamicFont" id=5]
+[ext_resource path="res://src/MainMenu.gd" type="Script" id=6]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_energy = 0.0
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.15
+ambient_light_sky_contribution = 0.0
+dof_blur_far_distance = 0.12
+dof_blur_far_amount = 0.05
+glow_enabled = true
+glow_strength = 1.5
+adjustment_enabled = true
+
+[node name="MainMenu" type="Spatial"]
+script = ExtResource( 6 )
+
+[node name="Level" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, -1.81568, 3.3149, 4.33067 )
+
+[node name="MainBase" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.42841 )
+
+[node name="Edge" parent="MainBase" index="0"]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.82297, 0, -3.91009 )
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 1 )]
+environment = SubResource( 1 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.33203, 0 )
+omni_range = 4096.0
+
+[node name="UI" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -51.0
+margin_top = 123.527
+margin_right = 51.0
+margin_bottom = 162.527
+custom_fonts/font = ExtResource( 4 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 4
+custom_constants/shadow_offset_y = 3
+text = "play"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Label" type="Label" parent="UI"]
+margin_left = 104.887
+margin_top = 52.9732
+margin_right = 498.887
+margin_bottom = 98.9732
+custom_fonts/font = ExtResource( 5 )
+text = "The final loop"
+align = 1
+valign = 1
+[connection signal="input_event" from="MainBase/Edge/Sensor" to="MainBase" method="_on_Sensor_input_event"]
+[connection signal="pressed" from="UI/Button" to="." method="_on_Button_pressed"]
+
+[editable path="MainBase"]

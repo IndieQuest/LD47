@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/Buildings/Tower.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Materials/Debug/regular.tres" type="Material" id=2]
+[ext_resource path="res://Assets/Materials/Debug/blocked.tres" type="Material" id=3]
+[ext_resource path="res://Assets/Materials/Debug/free.tres" type="Material" id=4]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.664363, 0.626134, 0.598296 )
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 1.54115, 0.327068, 1.5674 )
+
+[sub_resource type="CylinderShape" id=4]
+radius = 3.76157
+height = 1.26786
+
+[node name="DebugTower" instance=ExtResource( 1 )]
+cooldown = 1.5
+regular_material = ExtResource( 2 )
+blocked_material = ExtResource( 3 )
+free_material = ExtResource( 4 )
+
+[node name="Edge" parent="." index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Edge/Graphics" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474035, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Sensor" parent="Edge" index="1"]
+collision_mask = 1
+
+[node name="CollisionShape" parent="Edge/Sensor" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.513468, 0 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape" parent="Edge/BuildingBlocker" index="0"]
+shape = SubResource( 3 )
+
+[node name="BlockClockwise" parent="Edge/MovementBlocker" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.330597, 0, 0 )
+
+[node name="CollisionShape" parent="Edge/Range" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18053, 0 )
+shape = SubResource( 4 )

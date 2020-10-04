@@ -1,0 +1,180 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://Assets/Materials/HoverIcon.tres" type="Material" id=1]
+[ext_resource path="res://src/Turrets/Turret.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Models/Towers/GunTower/Head.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://Assets/Images/MuzzleFlash.png" type="Texture" id=4]
+[ext_resource path="res://src/Buildings/Moveable/Tower1.gd" type="Script" id=5]
+[ext_resource path="res://src/MachineGun/Tower1Bullet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/MachineGun/Gun.gd" type="Script" id=7]
+[ext_resource path="res://src/Buildings/Moveable/Guns.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Models/Towers/MuzzleFlash.obj" type="ArrayMesh" id=9]
+[ext_resource path="res://src/Buildings/Moveable/MF.gd" type="Script" id=10]
+[ext_resource path="res://Assets/SFX/Phaser.wav" type="AudioStream" id=11]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.619608, 0.619608, 0.619608, 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+albedo_color = Color( 0.635294, 0.505882, 0.505882, 0.498039 )
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+albedo_color = Color( 0.466667, 0.541176, 0.486275, 0.745098 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 0.4, 0.1, 0.4 )
+
+[sub_resource type="SpatialMaterial" id=11]
+flags_transparent = true
+params_cull_mode = 2
+albedo_texture = ExtResource( 4 )
+emission_enabled = true
+emission = Color( 0.486275, 0.486275, 0.486275, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+emission_texture = ExtResource( 4 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.26, 0.16, 0.26 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 0.301528, 0.079977, 0.298896 )
+
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 0.05, 0.1, 0.3 )
+
+[sub_resource type="BoxShape" id=8]
+extents = Vector3( 0.05, 0.1, 0.3 )
+
+[sub_resource type="CylinderShape" id=9]
+radius = 1.09669
+height = 0.195687
+
+[sub_resource type="PlaneMesh" id=10]
+size = Vector2( 1, 1 )
+
+[node name="Tower" type="Spatial"]
+script = ExtResource( 5 )
+damage = 0.5
+regular_material = SubResource( 1 )
+blocked_material = SubResource( 2 )
+free_material = SubResource( 3 )
+
+[node name="Edge" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.7 )
+
+[node name="Graphics" type="Spatial" parent="Edge"]
+
+[node name="Base" type="MeshInstance" parent="Edge/Graphics"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107292, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Head" type="MeshInstance" parent="Edge/Graphics"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.143686, 0 )
+mesh = ExtResource( 3 )
+material/0 = null
+script = ExtResource( 2 )
+body_path = NodePath(".")
+head_path = NodePath("DummyHead")
+rotation_speed_deg = 360.0
+
+[node name="DummyHead" type="Spatial" parent="Edge/Graphics/Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8 )
+
+[node name="Guns" type="Spatial" parent="Edge/Graphics/Head"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.344529, -1.10273 )
+script = ExtResource( 8 )
+
+[node name="Gun" type="Spatial" parent="Edge/Graphics/Head/Guns"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.332051, 0, -0.0299006 )
+script = ExtResource( 7 )
+bullet_res = ExtResource( 6 )
+muzzle_velocity = 30.0
+fire_rate = 1.5
+
+[node name="MF" type="MeshInstance" parent="Edge/Graphics/Head/Guns/Gun"]
+transform = Transform( 0.5, 0, 0, 0, 0.12941, 0.482963, 0, -0.482963, 0.12941, 0, 1.19209e-07, -0.220343 )
+visible = false
+mesh = ExtResource( 9 )
+material/0 = SubResource( 11 )
+script = ExtResource( 10 )
+
+[node name="FireSound" type="AudioStreamPlayer3D" parent="Edge/Graphics/Head/Guns/Gun"]
+stream = ExtResource( 11 )
+pitch_scale = 1.07
+
+[node name="Gun2" type="Spatial" parent="Edge/Graphics/Head/Guns"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.325756, 0, -0.0299006 )
+script = ExtResource( 7 )
+bullet_res = ExtResource( 6 )
+muzzle_velocity = 30.0
+fire_rate = 1.5
+
+[node name="MF" type="MeshInstance" parent="Edge/Graphics/Head/Guns/Gun2"]
+transform = Transform( 0.5, 0, 0, 0, 0.12941, 0.482963, 0, -0.482963, 0.12941, 0.0438283, 1.19209e-07, -0.220343 )
+visible = false
+mesh = ExtResource( 9 )
+material/0 = SubResource( 11 )
+script = ExtResource( 10 )
+
+[node name="FireSound" type="AudioStreamPlayer3D" parent="Edge/Graphics/Head/Guns/Gun2"]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -0.657807, 0, 0 )
+stream = ExtResource( 11 )
+pitch_scale = 1.07
+
+[node name="Sensor" type="Area" parent="Edge"]
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Edge/Sensor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.233408, 0 )
+shape = SubResource( 5 )
+
+[node name="BuildingBlocker" type="Area" parent="Edge"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Edge/BuildingBlocker"]
+shape = SubResource( 6 )
+
+[node name="MovementBlocker" type="Spatial" parent="Edge"]
+
+[node name="BlockClockwise" type="Area" parent="Edge/MovementBlocker"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.641039, 0, 0 )
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="Edge/MovementBlocker/BlockClockwise"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84834, 0, 0 )
+shape = SubResource( 7 )
+
+[node name="BlockCounterClockwise" type="Area" parent="Edge/MovementBlocker"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27423, 0, 0 )
+collision_layer = 2147483652
+collision_mask = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="Edge/MovementBlocker/BlockCounterClockwise"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.497714, 0, 0 )
+shape = SubResource( 8 )
+
+[node name="Range" type="Area" parent="Edge"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape" type="CollisionShape" parent="Edge/Range"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.29144 )
+shape = SubResource( 9 )
+
+[node name="HoverIcon" type="MeshInstance" parent="Edge"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0 )
+visible = false
+mesh = SubResource( 10 )
+material/0 = ExtResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+[connection signal="input_event" from="Edge/Sensor" to="." method="_on_Sensor_input_event"]
+[connection signal="area_entered" from="Edge/Range" to="." method="_on_Range_area_entered"]
+[connection signal="area_exited" from="Edge/Range" to="." method="_on_Range_area_exited"]
